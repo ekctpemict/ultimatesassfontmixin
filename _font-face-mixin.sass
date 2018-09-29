@@ -1,0 +1,8 @@
+@mixin font($font_family,$font__weight,$font_style,$filename,$path)
+  @font-face
+    font-family: $font_family
+    src: url($path + $filename)
+    font-weight: $font__weight
+    font-style: $font_style
+    src: url($path + $filename + '.eot')
+    src: url($path + $filename + '.eot?#iefix') format("embedded-opentype"), url($path + $filename + '.woff2') format("woff2"), url($path + $filename + '.woff') format("woff"), url($path + $filename + '.ttf') format("truetype")
