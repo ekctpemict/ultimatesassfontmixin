@@ -1,8 +1,34 @@
-@mixin font($font_family,$font__weight,$font_style,$filename,$path)
+@mixin iteration ($formats, $path, $filename)
+
+  $counter: length($formats)
+  $urls: ''
+
+  @each $format in $formats
+    $counter : $counter - 1
+    @if($format == 'eot')
+      src: url($path + $filename + '.eot')
+      $urls: $urls + 'url("#{$path + $filename}.eot?#iefix") format("embedded-opentype")'
+    @if($format == 'woff')
+      $urls: $urls + 'url("#{$path + $filename}.woff") format("woff")'
+    @if($format == 'woff2')
+      $urls: $urls + 'url("#{$path + $filename}.woff2") format("woff2")'
+    @if($format == 'ttf')
+      $urls: $urls + 'url("#{$path + $filename}.ttf") format("truetype")'
+    @if($counter > 0)
+      $urls : $urls + ', '
+
+  src: url($urls)
+
+
+@mixin font($font_family,$font__weight,$font_style,$filename,$path, $formats : null)
+  $default_formats: ['eot','woff','woff2','ttf']
+
   @font-face
     font-family: $font_family
-    src: url($path + $filename)
     font-weight: $font__weight
     font-style: $font_style
-    src: url($path + $filename + '.eot')
-    src: url($path + $filename + '.eot?#iefix') format("embedded-opentype"), url($path + $filename + '.woff2') format("woff2"), url($path + $filename + '.woff') format("woff"), url($path + $filename + '.ttf') format("truetype")
+
+    @if ($formats)
+      +iteration($formats, $path, $filename)
+    @else
+      +iteration($default_formats, $path, $filename)
