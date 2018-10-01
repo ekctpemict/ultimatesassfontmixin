@@ -1,5 +1,4 @@
 @mixin iteration ($formats, $path, $filename)
-
   $counter: length($formats)
   $urls: ''
 
@@ -17,7 +16,7 @@
     @if($counter > 0)
       $urls : $urls + ', '
 
-  src: url($urls)
+  src: #{$urls}
 
 
 @mixin font($font_family,$font__weight,$font_style,$filename,$path, $formats : null)
